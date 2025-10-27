@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "mastra dev",
     "build": "mastra build",
-    "start": "mastra serve",
+    "start": "node --import=./.mastra/output/instrumentation.mjs .mastra/output/index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
