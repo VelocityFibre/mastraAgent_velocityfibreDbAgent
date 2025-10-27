@@ -1,0 +1,37 @@
+{
+  "name": "velocityfibre-db-agent",
+  "version": "1.0.0",
+  "description": "VelocityFibre Database Analysis Agent - Provides insights and knowledge about VelocityFibre's project management database",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "start": "mastra serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mastra",
+    "agent",
+    "database",
+    "velocityfibre",
+    "analytics"
+  ],
+  "author": "VelocityFibre",
+  "license": "MIT",
+  "dependencies": {
+    "@mastra/core": "^0.23.1",
+    "@mastra/evals": "^0.14.2",
+    "@mastra/libsql": "^0.16.1",
+    "@mastra/memory": "^0.15.9",
+    "@neondatabase/serverless": "^1.0.2",
+    "dotenv": "^17.2.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "mastra": "^0.17.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
