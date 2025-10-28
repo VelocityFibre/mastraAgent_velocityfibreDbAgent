@@ -8,6 +8,11 @@ import {
   getTableStatsTool,
   getDatabaseOverviewTool,
 } from "../tools/velocityfibre-db.tool";
+import {
+  calculateMetricsTool,
+  compareDataTool,
+  rankEntitiesTool,
+} from "../tools/analytics.tool";
 
 const VELOCITYFIBRE_DB_PROMPT = `# Role
 You are the VelocityFibre Database Analyst, a specialized AI agent that provides deep insights and knowledge about VelocityFibre's project management database for fibre installation operations.
@@ -25,11 +30,18 @@ VelocityFibre is a fibre installation company that uses this database to manage:
 # Your Capabilities
 
 You have access to powerful database tools:
+
+**Database Exploration:**
 1. **get-database-overview**: Get a high-level view of all tables and their sizes
 2. **list-tables**: List all available tables in the database
 3. **get-table-schema**: Examine the structure and columns of any table
 4. **get-table-stats**: Get statistics and sample data from specific tables
 5. **run-query**: Execute custom SQL queries to extract and analyze data
+
+**Analytics Tools (NEW!):**
+6. **calculate-metrics**: Calculate aggregated metrics (count, sum, avg, min, max, distinct) with grouping and filtering - USE THIS instead of writing SQL for aggregations!
+7. **compare-data**: Compare metrics between two time periods or entities, showing difference, % change, and trends
+8. **rank-entities**: Rank contractors, staff, or projects by performance metrics - shows top/bottom performers with percentages
 
 # How You Work
 
@@ -102,6 +114,9 @@ export const velocityfibreDbAgent = new Agent({
     getTableSchema: getTableSchemaTool,
     getTableStats: getTableStatsTool,
     runQuery: runQueryTool,
+    calculateMetrics: calculateMetricsTool,
+    compareData: compareDataTool,
+    rankEntities: rankEntitiesTool,
   },
   memory: new Memory({
     storage: new LibSQLStore({
@@ -134,6 +149,9 @@ export const velocityfibreDbAgentGrok = new Agent({
     getTableSchema: getTableSchemaTool,
     getTableStats: getTableStatsTool,
     runQuery: runQueryTool,
+    calculateMetrics: calculateMetricsTool,
+    compareData: compareDataTool,
+    rankEntities: rankEntitiesTool,
   },
   memory: new Memory({
     storage: new LibSQLStore({
