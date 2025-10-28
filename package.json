@@ -5,10 +5,10 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "mastra dev",
     "build": "mastra build",
-    "start": "node --import=./.mastra/output/instrumentation.mjs .mastra/output/index.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "mastra start"
   },
   "keywords": [
     "mastra",
