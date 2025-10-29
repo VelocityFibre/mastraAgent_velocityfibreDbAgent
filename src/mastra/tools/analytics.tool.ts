@@ -35,22 +35,40 @@ function sanitizeValue(value: any): string {
 
 // Helper: Get valid table names
 async function getValidTableNames(): Promise<string[]> {
-  const result = await sql`
-    SELECT table_name
-    FROM information_schema.tables
-    WHERE table_schema = 'public'
-  `;
-  return Array.isArray(result) ? result.map(row => row.table_name) : [];
+  try {
+    const result = await sql`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+    `;
+    if (!result || !Array.isArray(result)) {
+      console.error('[ERROR] getValidTableNames returned non-array:', typeof result);
+      return [];
+    }
+    return result.map(row => row.table_name);
+  } catch (error) {
+    console.error('[ERROR] getValidTableNames failed:', error);
+    return [];
+  }
 }
 
 // Helper: Get table columns
 async function getTableColumns(tableName: string): Promise<string[]> {
-  const result = await sql`
-    SELECT column_name
-    FROM information_schema.columns
-    WHERE table_name = ${tableName}
-  `;
-  return Array.isArray(result) ? result.map(row => row.column_name) : [];
+  try {
+    const result = await sql`
+      SELECT column_name
+      FROM information_schema.columns
+      WHERE table_name = ${tableName}
+    `;
+    if (!result || !Array.isArray(result)) {
+      console.error('[ERROR] getTableColumns returned non-array:', typeof result);
+      return [];
+    }
+    return result.map(row => row.column_name);
+  } catch (error) {
+    console.error('[ERROR] getTableColumns failed:', error);
+    return [];
+  }
 }
 
 // Helper: Log query
