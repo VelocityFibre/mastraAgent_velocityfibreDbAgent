@@ -40,7 +40,7 @@ async function getValidTableNames(): Promise<string[]> {
     FROM information_schema.tables
     WHERE table_schema = 'public'
   `;
-  return result.map(row => row.table_name);
+  return Array.isArray(result) ? result.map(row => row.table_name) : [];
 }
 
 // Helper: Get table columns
@@ -50,7 +50,7 @@ async function getTableColumns(tableName: string): Promise<string[]> {
     FROM information_schema.columns
     WHERE table_name = ${tableName}
   `;
-  return result.map(row => row.column_name);
+  return Array.isArray(result) ? result.map(row => row.column_name) : [];
 }
 
 // Helper: Log query
