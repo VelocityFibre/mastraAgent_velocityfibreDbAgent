@@ -105,9 +105,15 @@ export const calculateMetricsTool = createTool({
       if (context.column) {
         const columns = await getTableColumns(context.tableName);
         if (!columns.includes(context.column)) {
-          throw new Error(
-            `Column '${context.column}' does not exist in table '${context.tableName}'. Use get-table-schema to see available columns.`
-          );
+          // For COUNT, fallback to COUNT(*) if column doesn't exist
+          if (context.metric === 'count') {
+            console.log(`[WARN] Column '${context.column}' not found, using COUNT(*) instead`);
+            context.column = undefined; // Clear column to use COUNT(*)
+          } else {
+            throw new Error(
+              `Column '${context.column}' does not exist in table '${context.tableName}'. Use get-table-schema to see available columns.`
+            );
+          }
         }
       }
 
