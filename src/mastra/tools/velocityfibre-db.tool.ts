@@ -1,8 +1,15 @@
 import { createTool } from "@mastra/core";
 import { z } from "zod";
 import { neon } from "@neondatabase/serverless";
+import dotenv from "dotenv";
+
+// Load .env file
+dotenv.config();
 
 // Initialize the database connection
+if (!process.env.DATABASE_URL) {
+  console.error('[FATAL] DATABASE_URL not found in environment variables');
+}
 const sql = neon(process.env.DATABASE_URL!);
 
 // Tool to list all tables in the database
