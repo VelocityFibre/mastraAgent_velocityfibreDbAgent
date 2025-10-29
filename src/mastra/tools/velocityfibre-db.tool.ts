@@ -133,14 +133,17 @@ export const runQueryTool = createTool({
       }
 
       console.log('[runQuery] Executing:', finalQuery);
-      const result = await sql.query(finalQuery);
-      console.log('[runQuery] Success - rows:', result.rows?.length || 0);
+      const result = await sql(finalQuery);  // Use template literal syntax
+      console.log('[runQuery] Success - rows:', Array.isArray(result) ? result.length : 0);
+
+      // Neon SQL returns array directly, not {rows: [...]}
+      const rows = Array.isArray(result) ? result : [];
 
       return {
         success: true,
-        data: result.rows as Array<Record<string, any>>,
-        rowCount: result.rows.length,
-        message: `Query executed successfully. Returned ${result.rows.length} rows.`,
+        data: rows as Array<Record<string, any>>,
+        rowCount: rows.length,
+        message: `Query executed successfully. Returned ${rows.length} rows.`,
       };
     } catch (error) {
       console.error('[runQuery] Failed:', error);
