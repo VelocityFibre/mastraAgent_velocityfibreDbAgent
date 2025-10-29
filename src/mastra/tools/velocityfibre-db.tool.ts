@@ -132,7 +132,9 @@ export const runQueryTool = createTool({
         finalQuery = `${query} LIMIT ${limit}`;
       }
 
+      console.log('[runQuery] Executing:', finalQuery);
       const result = await sql.query(finalQuery);
+      console.log('[runQuery] Success - rows:', result.rows?.length || 0);
 
       return {
         success: true,
@@ -141,6 +143,7 @@ export const runQueryTool = createTool({
         message: `Query executed successfully. Returned ${result.rows.length} rows.`,
       };
     } catch (error) {
+      console.error('[runQuery] Failed:', error);
       return {
         success: false,
         data: [],
